@@ -1,0 +1,14 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    padding: 10px;
+  }
+  
+.grid-item {
+    padding: 20px;
+}
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+}

@@ -1,6 +1,5 @@
 var corsApiUrl = "https://cors-anywhere.herokuapp.com/";
-// TODO: REPLACE YOUR TOKEN
-var apiToken = "?token=YOUR_TOKEN_HERE";
+var apiToken = "?token=rHHD_rh5B5mVd4ypO94pFsZUjybfhfKbM556rEVuFaE";
 
 // CORS stands for "cross origin resource sharing" -- you'll be making http requests in order
 // DON'T CHANGE THIS: fetches the data from the API endpoint
@@ -15,7 +14,8 @@ const doCORSRequest = (options) => {
 const corsPromise = () =>
   new Promise((resolve, reject) => {
     const request = doCORSRequest({
-      url: "https://trefle.io/api/v1/plants" + apiToken,
+      url: "https://trefle.io/api/v1/genus/4/plants" + apiToken,
+
     });
     resolve(request);
   });
@@ -24,8 +24,24 @@ const corsPromise = () =>
 corsPromise().then(
   (request) =>
     (request.onload = request.onerror = function () {
-      // TODO: ADD FUNCTION, ETC. FOR WHATEVER YOU WANT TO DO ONCE THE DATA IS RECEIVED
+      var plantList = JSON.parse(request.response);
+      plantList = plantList.data;
+      plantList.forEach(printPlant);
     })
 );
-
-//// TODO: ADD WHATEVER FUN CONTENT YOU WANT ////
+function printPlant(plantData){
+  var div = document.createElement('div');
+  div.className = "grid-item";
+  var url = plantData.image_url
+  if (url !== null) {
+    var img = document.createElement('img'); 
+    img.src = url;
+    div.appendChild(img);
+  }
+  var tag = document.createElement("p");
+  var text = document.createTextNode(plantData.scientific_name);
+  tag.appendChild(text);
+  div.appendChild(tag);
+  var element = document.getElementById("parent");
+  element.appendChild(div);
+}
